@@ -1,0 +1,81 @@
+<apex:page controller="EventBritePageController">
+<apex:sectionHeader title="Event Brite Access"/>
+
+<apex:pageMessages />
+
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockButtons >
+<apex:commandButton value="Get Events by Organizer" action="{!getEventsbyOrganizer}"/>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection >
+<apex:pageBlockSectionItem >
+<apex:outputLabel >Organizer Id</apex:outputLabel>
+<apex:inputText value="{!sOrganizerId}"/>
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+<apex:outputPanel id="events" rendered="{!bShowEventList}">
+
+<apex:pageBlockSection title="List of Events" id="eventlist">
+
+<apex:pageBlockTable value="{!EBEventList.events}" var="event">
+
+<apex:column headerValue="Event Name" >
+
+<apex:commandLink action="{!getAttendeesbyEvent}">
+<apex:param assignTo="{!sSelectedEvent}" name="sSelectedEvent"  value="{!event.id}"/>
+{!event.name.text}
+</apex:commandLink>
+</apex:column>
+
+<apex:column headerValue="Event Id" >
+{!event.id}
+</apex:column>
+
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+</apex:outputPanel>
+
+
+</apex:pageBlock>
+
+
+<apex:pageBlock rendered="{!bShowAttendeeList}">
+<apex:pageBlockButtons location="top">
+<apex:commandButton value="Back to Event List" action="{!returntoEvents}"/>
+</apex:pageBlockButtons>
+
+<apex:pageBlockTable value="{!EBAttendees.attendees}" var="attendee">
+<apex:column headerValue="First Name">
+{!attendee.profile.first_name}
+</apex:column>
+
+<apex:column headerValue="Last Name">
+{!attendee.profile.last_name}
+</apex:column>
+
+
+<apex:column headerValue="Email">
+{!attendee.profile.email}
+</apex:column>
+
+
+<apex:column headerValue="Checked In?">
+{!attendee.checked_in}
+</apex:column>
+
+<apex:column headerValue="Checked In?">
+<apex:repeat value="{!attendee.barcodes}" var="barcode">
+{!barcode.status} || {!barcode.barcode} 
+</apex:repeat>
+</apex:column>
+
+
+</apex:pageBlockTable>
+
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>
