@@ -25,6 +25,10 @@
         <name>CustomTab</name>
     </types>
     <types>
+        <members>EventBrite</members>
+        <name>RemoteSiteSetting</name>
+    </types>
+    <types>
         <members>*</members>
         <name>StaticResource</name>
     </types>
